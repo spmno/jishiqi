@@ -42,8 +42,8 @@ export default function TimerPage() {
   }, [isRunning2])
 
   // 长按计时器引用
-  const longPressTimer1 = useRef<NodeJS.Timeout>()
-  const longPressTimer2 = useRef<NodeJS.Timeout>()
+  const longPressTimer1 = useRef<NodeJS.Timeout | null>(null)
+  const longPressTimer2 = useRef<NodeJS.Timeout | null>(null)
 
   // 长按开始处理
   const handleLongPressStart = (timerNum: number) => {
@@ -62,7 +62,9 @@ export default function TimerPage() {
   // 长按取消处理
   const handleLongPressCancel = (timerNum: number) => {
     const timer = timerNum === 1 ? longPressTimer1 : longPressTimer2
-    clearTimeout(timer.current)
+    if (timer.current) {
+    clearTimeout(timer.current as NodeJS.Timeout)
+  }
   }
 
   return (

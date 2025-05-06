@@ -7,6 +7,7 @@ const internalHost = process.env.TAURI_DEV_HOST || 'localhost';
 const nextConfig: NextConfig = {
   /* config options here */
   output: "export",
+  distDir: 'dist', 
   images: {
     unoptimized: true,
   },
