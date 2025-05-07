@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues>
+    <issue id="Instantiatable" message="MainActivity must extend android.app.Activity">
+        <location file="src/main/AndroidManifest.xml"/>
+    </issue>
+</issues>
