@@ -2,6 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { useState, useEffect, useRef } from "react"
+import { listen } from '@tauri-apps/api/event';
+import { invoke } from "@tauri-apps/api/core";
 
 export default function TimerPage() {
   // 第一个计时器状态
@@ -41,22 +43,10 @@ export default function TimerPage() {
     return () => clearInterval(interval)
   }, [isRunning2])
 
-  // 长按计时器引用
-  const longPressTimer1 = useRef<NodeJS.Timeout | null>(null)
-  const longPressTimer2 = useRef<NodeJS.Timeout | null>(null)
 
   // 长按开始处理
   const handleLongPressStart = (timerNum: number) => {
-    const timer = timerNum === 1 ? longPressTimer1 : longPressTimer2
-    timer.current = setTimeout(() => {
-      if(timerNum === 1) {
-        setIsRunning1(false)
-        setTimeout(() => setIsRunning1(true), 5000) // 5秒后重新开始
-      } else {
-        setIsRunning2(false)
-        setTimeout(() => setIsRunning2(true), 5000)
-      }
-    }, 1000) // 长按1秒触发
+    invoke('start_timer');
   }
 
   // 长按取消处理
@@ -65,6 +55,18 @@ export default function TimerPage() {
     if (timer.current) {
     clearTimeout(timer.current as NodeJS.Timeout)
   }
+
+  useEffect(() => {
+    // 监听事件
+    const unlisten = listen<String>('tick', (event) => {
+      console.log('收到tick事件.');
+    });
+
+    // 组件卸载时取消监听
+    return () => {
+      unlisten.then(fn => fn());
+    };
+  }, []);
   }
 
   return (
