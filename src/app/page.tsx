@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { listen } from '@tauri-apps/api/event';
 import { invoke } from "@tauri-apps/api/core";
 
@@ -21,53 +21,48 @@ export default function TimerPage() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
-  // 第一个计时器effect
-  useEffect(() => {
-    let interval: NodeJS.Timeout
-    if (isRunning1) {
-      interval = setInterval(() => {
-        setTimer1(prev => prev + 1)
-      }, 1000)
-    }
-    return () => clearInterval(interval)
-  }, [isRunning1])
-
-  // 第二个计时器effect
-  useEffect(() => {
-    let interval: NodeJS.Timeout
-    if (isRunning2) {
-      interval = setInterval(() => {
-        setTimer2(prev => prev + 1)
-      }, 1000)
-    }
-    return () => clearInterval(interval)
-  }, [isRunning2])
-
-
   // 长按开始处理
   const handleLongPressStart = (timerNum: number) => {
-    invoke('start_timer');
+    if (timerNum == 1) {
+      if (isRunning1) {
+        invoke('stop_timer');
+      } else {
+        invoke('start_timer');
+      }
+    } else {
+      if (isRunning2) {
+        invoke('stop_timer');
+      } else {
+        invoke('start_timer');
+      }
+    }
+    
   }
 
   // 长按取消处理
   const handleLongPressCancel = (timerNum: number) => {
-    const timer = timerNum === 1 ? longPressTimer1 : longPressTimer2
-    if (timer.current) {
-    clearTimeout(timer.current as NodeJS.Timeout)
+
   }
 
   useEffect(() => {
     // 监听事件
     const unlisten = listen<String>('tick', (event) => {
       console.log('收到tick事件.');
+      if (isRunning1) {
+        setTimer1(prev => prev + 1);
+      }
+
+      if (isRunning2) {
+        setTimer2(prev => prev + 1);
+      }
     });
 
     // 组件卸载时取消监听
     return () => {
       unlisten.then(fn => fn());
     };
-  }, []);
-  }
+  }, [isRunning1, isRunning2]);
+  
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-8 p-8">
