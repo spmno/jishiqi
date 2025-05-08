@@ -39,15 +39,11 @@ export default function TimerPage() {
     
   }
 
-  // 长按取消处理
-  const handleLongPressCancel = (timerNum: number) => {
-
-  }
 
   useEffect(() => {
     // 监听事件
     const unlisten = listen<String>('tick', (event) => {
-      console.log('收到tick事件.');
+      console.log('收到tick事件.', event);
       if (isRunning1) {
         setTimer1(prev => prev + 1);
       }
@@ -73,9 +69,7 @@ export default function TimerPage() {
         <Button 
           onClick={() => setIsRunning1(!isRunning1)}
           onMouseDown={() => handleLongPressStart(1)}
-          onMouseUp={() => handleLongPressCancel(1)}
           onTouchStart={() => handleLongPressStart(1)}
-          onTouchEnd={() => handleLongPressCancel(1)}
           className="w-32"
         >
           {isRunning1 ? '暂停' : '开始'}
@@ -89,9 +83,7 @@ export default function TimerPage() {
         <Button 
           onClick={() => setIsRunning2(!isRunning2)}
           onMouseDown={() => handleLongPressStart(2)}
-          onMouseUp={() => handleLongPressCancel(2)}
           onTouchStart={() => handleLongPressStart(2)}
-          onTouchEnd={() => handleLongPressCancel(2)}
           className="w-32"
         >
           {isRunning2 ? '暂停' : '开始'}
