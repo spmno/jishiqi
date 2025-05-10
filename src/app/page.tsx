@@ -69,7 +69,6 @@ export default function TimerPage() {
         <Button 
           onClick={() => setIsRunning1(!isRunning1)}
           onMouseDown={() => handleLongPressStart(1)}
-          onTouchStart={() => handleLongPressStart(1)}
           className="w-32"
         >
           {isRunning1 ? '暂停' : '开始'}
@@ -83,7 +82,6 @@ export default function TimerPage() {
         <Button 
           onClick={() => setIsRunning2(!isRunning2)}
           onMouseDown={() => handleLongPressStart(2)}
-          onTouchStart={() => handleLongPressStart(2)}
           className="w-32"
         >
           {isRunning2 ? '暂停' : '开始'}
