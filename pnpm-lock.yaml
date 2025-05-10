@@ -41,6 +41,9 @@ importers:
       tailwind-merge:
         specifier: ^3.2.0
         version: 3.2.0
+      tauri-plugin-app-events-api:
+        specifier: ^0.2.0
+        version: 0.2.0
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4
@@ -1120,6 +1123,9 @@ packages:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
 
+  tauri-plugin-app-events-api@0.2.0:
+    resolution: {integrity: sha512-CnlAeucWhT+Rgx6CCsqUpq2D3pqgx0fhjSPKomH7O2t1rGVu5kGLMkYvaCX6gqVTUYpIWX5BLV7LGY2DRri0QA==}
+
   tinyglobby@0.2.13:
     resolution: {integrity: sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==}
     engines: {node: '>=12.0.0'}
@@ -2058,6 +2064,10 @@ snapshots:
   tailwindcss@4.1.5: {}
 
   tapable@2.2.1: {}
+
+  tauri-plugin-app-events-api@0.2.0:
+    dependencies:
+      '@tauri-apps/api': 2.5.0
 
   tinyglobby@0.2.13:
     dependencies:
